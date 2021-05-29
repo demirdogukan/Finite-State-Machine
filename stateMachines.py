@@ -10,7 +10,7 @@ class Attack(StateMachine):
 
     def start(self):
         print("Entering Attack..")
-        self.state = States.ATTACK
+        self._state = States.ATTACK
         return super().start()
 
     def update(self):
@@ -18,9 +18,9 @@ class Attack(StateMachine):
         new_state = input("Enter A State: ")
         if new_state == "DIE":
             self.action = Action.EXIT
-            self.nexState = Die()
+            self._nexState = Die()
         elif new_state == "Walking":
-            self.action = Action.EXIT
+            self._action = Action.EXIT
 
     def exit(self):
         print("Exiting Attack..")
@@ -34,12 +34,12 @@ class Die(StateMachine):
 
     def start(self):
         print("Entering Dying..")
-        self.state = States.DIE
+        self._state = States.DIE
         return super().start()
 
     def update(self):
         print("DIED..")
-        self.action = Action.EXIT
+        self._action = Action.EXIT
 
     def exit(self):
         print("Exiting Dying..")
@@ -52,7 +52,7 @@ class Idle(StateMachine):
         super().__init__()
 
     def start(self):
-        self.state = States.IDLE
+        self._state = States.IDLE
         print("Entering idle start..")
         return super().start()
 
@@ -62,10 +62,10 @@ class Idle(StateMachine):
 
         if new_state == "WALKING":
             self.action = Action.EXIT
-            self.nexState = Walk()
+            self._nexState = Walk()
         elif new_state == "PATROL":
             self.action = Action.EXIT
-            self.nexState = Patrol()
+            self._nexState = Patrol()
 
     def exit(self):
         print("Exiting Idle..")
@@ -79,18 +79,18 @@ class Patrol(StateMachine):
 
     def start(self):
         print("Entering Patrolling..")
-        self.state = States.PATROL
+        self._state = States.PATROL
         return super().start()
 
     def update(self):
         print("Patrolling..")
         new_state = input("Enter A State: ")
         if new_state == "ATTACK":
-            self.action = Action.EXIT
-            self.nexState = Attack()
+            self._action = Action.EXIT
+            self._nexState = Attack()
         elif new_state == "IDLE":
-            self.action = Action.EXIT
-            self.nexState = Idle()
+            self._action = Action.EXIT
+            self._nexState = Idle()
 
     def exit(self):
         print("Exiting Patrolling..")
@@ -104,7 +104,7 @@ class Pursuit(StateMachine):
 
     def start(self):
         print("Entering Run..")
-        self.state = States.PURSUIT
+        self._state = States.PURSUIT
         return super().start()
 
     def update(self):
@@ -112,14 +112,14 @@ class Pursuit(StateMachine):
         new_state = input("Enter A Statement: ")
 
         if new_state == "ATTACK":
-            self.action = Action.EXIT
-            self.state = Attack()
+            self._action = Action.EXIT
+            self._state = Attack()
         elif new_state == "WALK":
-            self.action = Action.EXIT
-            # self.state = Walk()
+            self._action = Action.EXIT
+            self._state = Walk()
         elif new_state == "DIE":
-            self.action = Action.EXIT
-            self.state = Die()
+            self._action = Action.EXIT
+            self._state = Die()
 
     def exit(self):
         print("EXIT RUNNING..")
@@ -133,7 +133,7 @@ class Walk(StateMachine):
 
     def start(self):
         print("Entering Walking..")
-        self.state = States.WALK
+        self._state = States.WALK
         return super().start()
 
     def update(self):
@@ -141,14 +141,14 @@ class Walk(StateMachine):
         new_state = input("Enter A Statement: ")
 
         if new_state == "ATTACK":
-            self.action = Action.EXIT
-            self.nexState = Attack()
+            self._action = Action.EXIT
+            self._nexState = Attack()
         elif new_state == "PURSUIT":
-            self.action = Action.EXIT
-            self.nexState = Pursuit()
+            self._action = Action.EXIT
+            self._nexState = Pursuit()
         elif new_state == "PATROL":
-            self.action = Action.EXIT
-            self.nexState = Patrol()
+            self._action = Action.EXIT
+            self._nexState = Patrol()
 
     def exit(self):
         print("Exiting Walking..")
