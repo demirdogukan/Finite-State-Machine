@@ -18,9 +18,9 @@ class Action(Enum):
 
 
 class StateMachine(ABC):
-    nexState = None
-    state = States(value=1)
-    action = Action(value=1)
+    _nexState = None
+    _state = States(value=1)
+    _action = Action(value=1)
 
     @abstractmethod
     def start(self):
@@ -41,6 +41,6 @@ class StateMachine(ABC):
             self.update()
         elif self.action == Action.EXIT:
             self.exit()
-            return self.nexState
+            return self._nexState
 
         return self
